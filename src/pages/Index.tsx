@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
 import StyleguideSection from '../components/StyleguideSection';
@@ -11,9 +11,30 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   const [currentTheme, setCurrentTheme] = useState<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'>('default');
+  const [autoSwitchTheme, setAutoSwitchTheme] = useState(true);
+  
+  // Auto-switching theme for the demonstration
+  useEffect(() => {
+    if (!autoSwitchTheme) return;
+    
+    const themes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = [
+      'default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'
+    ];
+    
+    const interval = setInterval(() => {
+      setCurrentTheme(prevTheme => {
+        const currentIndex = themes.indexOf(prevTheme);
+        const nextIndex = (currentIndex + 1) % themes.length;
+        return themes[nextIndex];
+      });
+    }, 8000); // Switch theme every 8 seconds
+    
+    return () => clearInterval(interval);
+  }, [autoSwitchTheme]);
   
   const handleThemeChange = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => {
     setCurrentTheme(theme);
+    setAutoSwitchTheme(false); // Stop auto switching when user manually selects a theme
   };
 
   return (
