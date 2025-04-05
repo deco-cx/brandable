@@ -1,4 +1,3 @@
-
 import React from 'react';
 import StyleguidePreview from './StyleguidePreview';
 import { 
@@ -25,9 +24,6 @@ const StyleguideSection: React.FC<Props> = ({ theme }) => {
           <h2 className="text-2xl font-bold mb-2">
             Your Brand, Amplified for Everyone
           </h2>
-          <p className="text-gray-600">
-            Create autonomy and consistency with a styleguide that keeps everyone on-brand
-          </p>
         </div>
         
         <div className="max-w-4xl mx-auto">

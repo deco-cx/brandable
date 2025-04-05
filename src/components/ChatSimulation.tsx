@@ -101,8 +101,8 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   }, [visibleMessages.length, currentConversation, onThemeChange]);
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full h-[350px] overflow-y-auto flex flex-col">
-      <div className="text-sm font-medium text-gray-500 mb-4 flex items-center">
+    <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-xl h-[400px] overflow-y-auto flex flex-col">
+      <div className="text-sm font-bold text-gray-500 mb-4 flex items-center">
         <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
         Brandable is interviewing you
       </div>
@@ -114,12 +114,12 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
             className={`chat-bubble ${message.sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}`}
             style={{ animationDelay: '0.2s' }}
           >
-            {message.text}
+            <span className="font-medium">{message.text}</span>
           </div>
         ))}
       </div>
       
-      <div className="text-xs text-gray-400 mt-4 text-center">
+      <div className="text-xs font-semibold text-gray-400 mt-4 text-center">
         Watch as the page theme updates based on your brand
       </div>
     </div>
