@@ -19,7 +19,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   const [currentConversation, setCurrentConversation] = useState(0);
 
   // Define all conversation sequences
-  const conversations = [
+  const conversations: Message[][] = [
     // Eco conversation
     [
       { id: 1, text: "What's the name of your brand?", sender: 'bot', delay: 1000 },
