@@ -110,7 +110,7 @@ const DecoSection: React.FC = () => {
           </div>
 
           <div className="text-center mt-12 text-[#1b401e]/60">
-            <p>Whatever your stack, Brandable adapts.</p>
+            
           </div>
         </div>
       </div>
