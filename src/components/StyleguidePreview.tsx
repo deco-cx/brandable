@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
@@ -167,6 +169,23 @@ const StyleguidePreview: React.FC<Props> = ({ theme }) => {
       <div className="mt-8 flex justify-center">
         <div className={`h-10 px-6 ${buttonClass} rounded-full flex items-center justify-center text-sm font-medium transition-colors duration-700`}>
           {buttonLabel}
+        </div>
+      </div>
+
+      {/* New Landing Page Generator section */}
+      <div className="mt-8 border-t pt-8">
+        <h4 className="text-sm font-medium text-gray-500 mb-3">Landing Page Generator</h4>
+        <Textarea 
+          placeholder="Describe the landing page you want to generate with this brand style..."
+          className={`${fontFamily} mb-4 bg-white/50 transition-all duration-700`}
+          rows={4}
+        />
+        <div className="flex justify-center">
+          <Button 
+            className={`${buttonClass} font-medium px-6 py-2 rounded-full transition-colors duration-700`}
+          >
+            Generate Landing Page
+          </Button>
         </div>
       </div>
     </div>
