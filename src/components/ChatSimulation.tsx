@@ -50,6 +50,15 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     { id: 3, text: "For a children's brand, bright colors and rounded shapes would be perfect! See this theme.", sender: 'bot', delay: 2000, theme: 'playful' },
     { id: 3, text: "For your minimalist design studio, I'd recommend a clean black and white theme with subtle grays.", sender: 'bot', delay: 2000, theme: 'minimalist' }
   ];
+  
+  // User thank you messages (fourth message)
+  const thankYouMessages: Message[] = [
+    { id: 4, text: "That's perfect! The green tones really capture our eco-friendly values. Thank you!", sender: 'user', delay: 2000 },
+    { id: 4, text: "Wow, that's exactly what we were looking for! The tech vibe is spot on. Thanks!", sender: 'user', delay: 2000 },
+    { id: 4, text: "Absolutely beautiful! The elegant color scheme perfectly represents our luxury brand. Thank you!", sender: 'user', delay: 2000 },
+    { id: 4, text: "The kids will love this! Those playful colors are exactly what we wanted. Thanks so much!", sender: 'user', delay: 2000 },
+    { id: 4, text: "That minimalist approach is exactly what we were after. Clean and professional. Thank you!", sender: 'user', delay: 2000 }
+  ];
 
   // Map theme names to conversation indexes
   const themeToConversationMap: Record<string, number> = {
@@ -101,6 +110,9 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     // Initial messages phase (30% of total time)
     const initialPhaseTime = totalDuration * 0.3;
     
+    // Make sure to start with empty theme
+    onThemeChange('empty');
+    
     // Reset visible messages and start with initial message
     setVisibleMessages([initialMessages[0]]);
     
@@ -121,23 +133,29 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
         
         setStepState(StepState.THEMED_DISPLAY);
         
-        // If user hasn't manually selected a theme, set timer to move to next brand
-        if (!userSelectedTheme) {
-          stateTimerRef.current = setTimeout(() => {
-            const nextConversation = (conversationIndex + 1) % brandResponses.length;
-            
-            // Reset state for next conversation
-            setVisibleMessages([]);
-            setCurrentConversation(nextConversation);
-            setStepState(StepState.INITIAL_MESSAGES);
-            
-            // Reset to empty state
-            onThemeChange('empty');
-            
-            // Start the next conversation
-            startConversationFlow(nextConversation);
-          }, totalDuration * 0.7); // Themed display lasts 70% of the time
-        }
+        // Add thank you message after a delay
+        setTimeout(() => {
+          setVisibleMessages(prev => [...prev, thankYouMessages[conversationIndex]]);
+          
+          // If user hasn't manually selected a theme, set timer to move to next brand
+          if (!userSelectedTheme) {
+            stateTimerRef.current = setTimeout(() => {
+              const nextConversation = (conversationIndex + 1) % brandResponses.length;
+              
+              // Reset state for next conversation
+              setVisibleMessages([]);
+              setCurrentConversation(nextConversation);
+              setStepState(StepState.INITIAL_MESSAGES);
+              
+              // Reset to empty state
+              onThemeChange('empty');
+              
+              // Start the next conversation
+              startConversationFlow(nextConversation);
+            }, totalDuration * 0.5); // Reduce time after thank you message
+          }
+        }, 2000); // Delay for thank you message
+        
       }, brandResponses[conversationIndex].delay);
     }, initialMessages[0].delay);
   };
