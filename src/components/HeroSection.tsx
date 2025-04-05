@@ -2,11 +2,15 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import ChatSimulation from './ChatSimulation';
+
 interface Props {
   onThemeChange: (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
+  currentTheme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
+
 const HeroSection: React.FC<Props> = ({
-  onThemeChange
+  onThemeChange,
+  currentTheme
 }) => {
   return <section className="relative pt-32 pb-6 overflow-hidden">
       {/* Improved bottom gradient fade */}
@@ -39,11 +43,12 @@ const HeroSection: React.FC<Props> = ({
           
           <div className="flex justify-center lg:justify-end">
             <div className="transform transition-all duration-500 hover:scale-105 w-full max-w-xl">
-              <ChatSimulation onThemeChange={onThemeChange} />
+              <ChatSimulation onThemeChange={onThemeChange} currentTheme={currentTheme} />
             </div>
           </div>
         </div>
       </div>
     </section>;
 };
+
 export default HeroSection;

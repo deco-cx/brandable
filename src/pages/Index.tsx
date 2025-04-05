@@ -39,7 +39,7 @@ const Index = () => {
     <div className="min-h-screen font-sans">
       <Navbar />
       <main>
-        <HeroSection onThemeChange={handleThemeChange} />
+        <HeroSection onThemeChange={handleThemeChange} currentTheme={currentTheme} />
         <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
         <GeneratorSection theme={currentTheme} />
         <ModelSection />
