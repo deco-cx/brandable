@@ -10,7 +10,7 @@ import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
 
 const Index = () => {
-  const [currentTheme, setCurrentTheme] = useState<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'>('default');
+  const [currentTheme, setCurrentTheme] = useState<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty'>('empty');
   const [autoSwitchTheme, setAutoSwitchTheme] = useState(true);
   const [transitionInProgress, setTransitionInProgress] = useState(false);
   
@@ -27,6 +27,9 @@ const Index = () => {
         setTransitionInProgress(true);
         
         setCurrentTheme(prevTheme => {
+          // If we're currently in empty state, stay in it (will be managed by chat)
+          if (prevTheme === 'empty') return 'empty';
+          
           const currentIndex = themes.indexOf(prevTheme);
           const nextIndex = (currentIndex + 1) % themes.length;
           return themes[nextIndex];
@@ -42,17 +45,21 @@ const Index = () => {
     return () => clearInterval(interval);
   }, [autoSwitchTheme, transitionInProgress]);
   
-  const handleThemeChange = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => {
+  const handleThemeChange = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
     if (transitionInProgress) return;
     
     setTransitionInProgress(true);
     setCurrentTheme(theme);
-    setAutoSwitchTheme(false); // Stop auto switching when user manually selects a theme
     
-    // Update URL with theme parameter for bookmarking/sharing
-    const url = new URL(window.location.href);
-    url.searchParams.set('theme', theme);
-    window.history.replaceState({}, '', url.toString());
+    // Only stop auto switching when user manually selects a non-empty theme
+    if (theme !== 'empty') {
+      setAutoSwitchTheme(false);
+      
+      // Update URL with theme parameter for bookmarking/sharing
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', theme);
+      window.history.replaceState({}, '', url.toString());
+    }
     
     // Reset transition state after animation completes
     setTimeout(() => {

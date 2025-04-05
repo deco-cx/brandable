@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
 interface Props {
-  theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
+  theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
 
 const StyleguidePreview: React.FC<Props> = ({ theme }) => {
@@ -103,7 +104,25 @@ const StyleguidePreview: React.FC<Props> = ({ theme }) => {
       buttonLabel = "Our Work";
       break;
     
-    default: // 'default'
+    case 'empty':
+      // Empty state - neutral colors and placeholders
+      colorPalette = [
+        { color: '#f8f9fa', name: 'White', hex: '#f8f9fa' },
+        { color: '#e9ecef', name: 'Light Gray 1', hex: '#e9ecef' },
+        { color: '#dee2e6', name: 'Light Gray 2', hex: '#dee2e6' },
+        { color: '#ced4da', name: 'Light Gray 3', hex: '#ced4da' },
+        { color: '#adb5bd', name: 'Medium Gray', hex: '#adb5bd' }
+      ];
+      brandName = "Waiting for brand input...";
+      fontFamily = "font-sans";
+      headingClass = "text-gray-400";
+      buttonClass = "bg-gray-200 hover:bg-gray-300 text-gray-500";
+      backgroundClass = "bg-gradient-to-r from-gray-50 via-white to-gray-50";
+      brandVoice = "Your brand voice will appear here after analysis...";
+      buttonLabel = "Generate";
+      break;
+      
+    default: // 'default' - should be very similar to empty but keep for backward compatibility
       colorPalette = [
         { color: '#0ea5e9', name: 'Primary Blue', hex: '#0ea5e9' },
         { color: '#38bdf8', name: 'Secondary Blue', hex: '#38bdf8' },

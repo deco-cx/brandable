@@ -6,11 +6,11 @@ interface Message {
   text: string;
   sender: 'bot' | 'user';
   delay: number;
-  theme?: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
+  theme?: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
 
 interface Props {
-  onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => void;
+  onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
 }
 
 const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
@@ -24,7 +24,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   const conversations: Message[][] = [
     // Eco conversation
     [
-      { id: 1, text: "What's the name of your brand?", sender: 'bot', delay: 1000 },
+      { id: 1, text: "What's the name of your brand?", sender: 'bot', delay: 1000, theme: 'empty' },
       { id: 2, text: "Amazonian Rainforest Eco Beauty", sender: 'user', delay: 2000 },
       { id: 3, text: "Great. Got a website I can look at?", sender: 'bot', delay: 2000 },
       { id: 4, text: "rainforestbeauty.co", sender: 'user', delay: 2000 },
@@ -33,7 +33,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     ],
     // Tech conversation
     [
-      { id: 1, text: "What's the name of your brand?", sender: 'bot', delay: 1000 },
+      { id: 1, text: "What's the name of your brand?", sender: 'bot', delay: 1000, theme: 'empty' },
       { id: 2, text: "Quantum Tech Solutions", sender: 'user', delay: 2000 },
       { id: 3, text: "Can you tell me about your industry?", sender: 'bot', delay: 2000 },
       { id: 4, text: "We're a B2B SaaS company focusing on AI and cloud solutions", sender: 'user', delay: 2000 },
@@ -42,7 +42,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     ],
     // Luxury conversation
     [
-      { id: 1, text: "Tell me about your company", sender: 'bot', delay: 1000 },
+      { id: 1, text: "Tell me about your company", sender: 'bot', delay: 1000, theme: 'empty' },
       { id: 2, text: "Elegance Luxury Watches - we sell premium timepieces", sender: 'user', delay: 2000 },
       { id: 3, text: "What's your target demographic?", sender: 'bot', delay: 2000 },
       { id: 4, text: "Affluent professionals who appreciate craftsmanship", sender: 'user', delay: 2000 },
@@ -51,7 +51,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     ],
     // Playful conversation
     [
-      { id: 1, text: "Hi! What's your brand about?", sender: 'bot', delay: 1000 },
+      { id: 1, text: "Hi! What's your brand about?", sender: 'bot', delay: 1000, theme: 'empty' },
       { id: 2, text: "FunTime Kids Academy - educational activities for children", sender: 'user', delay: 2000 },
       { id: 3, text: "How would you describe your brand personality?", sender: 'bot', delay: 2000 },
       { id: 4, text: "Playful, colorful, energetic, and fun!", sender: 'user', delay: 2000 },
@@ -60,7 +60,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     ],
     // Minimalist conversation
     [
-      { id: 1, text: "What's your brand name?", sender: 'bot', delay: 1000 },
+      { id: 1, text: "What's your brand name?", sender: 'bot', delay: 1000, theme: 'empty' },
       { id: 2, text: "Mono Design Studio", sender: 'user', delay: 2000 },
       { id: 3, text: "What services do you offer?", sender: 'bot', delay: 2000 },
       { id: 4, text: "Minimalist graphic design and brand identity", sender: 'user', delay: 2000 },
@@ -72,6 +72,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   // Map theme names to conversation indexes
   const themeToConversationMap: Record<string, number> = {
     'default': 0, // Default to eco for demo purposes
+    'empty': 0,
     'eco': 0,
     'tech': 1,
     'luxury': 2,
@@ -80,7 +81,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   };
 
   // Start a specific conversation based on theme selection
-  const startConversationForTheme = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => {
+  const startConversationForTheme = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
     const conversationIndex = themeToConversationMap[theme] || 0;
     
     // Reset chat state
@@ -89,15 +90,18 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     setCurrentConversation(conversationIndex);
     setIsPlaying(true);
     setIsThemeChanging(false);
+    
+    // Start with empty state
+    onThemeChange('empty');
   };
 
   // Watch for theme changes from URL
   useEffect(() => {
-    const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | null;
+    const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty' | null;
     
     if (currentThemeParam) {
       const currentVisible = visibleMessages.find(m => m.theme)?.theme;
-      if (currentVisible !== currentThemeParam && currentThemeParam !== 'default') {
+      if (currentVisible !== currentThemeParam && currentThemeParam !== 'default' && currentThemeParam !== 'empty') {
         startConversationForTheme(currentThemeParam);
       }
     }
@@ -135,12 +139,11 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
         // Next conversation in sequence
         const nextConversation = (currentConversation + 1) % conversations.length;
         
-        // Find the theme message in the next conversation
-        const nextThemeMessage = conversations[nextConversation].find(msg => msg.theme);
+        // Reset to empty state between conversations
+        onThemeChange('empty');
         
-        // Clean transition to the next theme
-        if (nextThemeMessage && nextThemeMessage.theme) {
-          // First clear messages
+        // Clear messages and prepare for next conversation
+        setTimeout(() => {
           setVisibleMessages([]);
           setCurrentIndex(0);
           
@@ -148,7 +151,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
           setTimeout(() => {
             setCurrentConversation(nextConversation);
           }, 500);
-        }
+        }, 1000);
       }, 3000); // 3 second pause before next conversation starts
 
       return () => clearTimeout(resetTimer);

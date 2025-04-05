@@ -4,8 +4,8 @@ import StyleguidePreview from './StyleguidePreview';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 
 interface Props {
-  theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
-  onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => void;
+  theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
+  onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
 }
 
 const StyleguideSection: React.FC<Props> = ({
@@ -18,7 +18,7 @@ const StyleguideSection: React.FC<Props> = ({
 
   // Sync carousel position with current theme
   useEffect(() => {
-    if (api && theme !== 'default') {
+    if (api && theme !== 'empty' && theme !== 'default') {
       const themeIndex = allThemes.indexOf(theme);
       if (themeIndex >= 0) {
         api.scrollTo(themeIndex);
