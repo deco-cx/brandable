@@ -1,25 +1,16 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Github, ArrowRight, Server, Cloud } from 'lucide-react';
-
 const DecoSection: React.FC = () => {
-  return (
-    <section id="deco-section" className="py-20 bg-[#fcfbf6] text-[#1b401e]">
+  return <section id="deco-section" className="py-20 bg-[#fcfbf6] text-[#1b401e]">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 flex flex-col items-center">
-            <img 
-              src="/lovable-uploads/ccac7e82-bf5d-4376-87af-492aee896088.png" 
-              alt="deco.chat logo" 
-              className="h-16 mb-6"
-            />
+            <img src="/lovable-uploads/ccac7e82-bf5d-4376-87af-492aee896088.png" alt="deco.chat logo" className="h-16 mb-6" />
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1b401e]">
               Powered by deco.chat — Open Source or Fully Managed
             </h2>
-            <p className="text-xl text-[#1b401e]/80 max-w-3xl mx-auto">
-              Brandable is built on deco.chat, the open platform for internal AI agents.
-            </p>
+            <p className="text-xl text-[#1b401e]/80 max-w-2xl mx-auto">Brandable is built on deco.chat, the open platform where you can build your own AI agents like Lovable, Bolt, and thousands more!</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -63,12 +54,7 @@ const DecoSection: React.FC = () => {
               </div>
               
               <div>
-                <a 
-                  href="https://github.com/deco-cx/chat" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b401e] focus-visible:ring-offset-2 disabled:opacity-50 border border-[#1b401e]/30 text-[#1b401e] hover:bg-[#1b401e]/5 h-10 px-4 py-2"
-                >
+                <a href="https://github.com/deco-cx/chat" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b401e] focus-visible:ring-offset-2 disabled:opacity-50 border border-[#1b401e]/30 text-[#1b401e] hover:bg-[#1b401e]/5 h-10 px-4 py-2">
                   <Github className="mr-2 h-4 w-4" />
                   Self-host for Free
                 </a>
@@ -115,12 +101,7 @@ const DecoSection: React.FC = () => {
               </div>
               
               <div>
-                <a 
-                  href="https://deco.chat/brandable" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="bg-gradient-to-r from-[#9eca50] to-[#8ab948] hover:from-[#8ab948] hover:to-[#79a53c] text-white font-medium px-5 py-2 rounded-md transition transform hover:scale-105 inline-flex items-center"
-                >
+                <a href="https://deco.chat/brandable" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#9eca50] to-[#8ab948] hover:from-[#8ab948] hover:to-[#79a53c] text-white font-medium px-5 py-2 rounded-md transition transform hover:scale-105 inline-flex items-center">
                   Create Agent Now
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
@@ -133,8 +114,6 @@ const DecoSection: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default DecoSection;
