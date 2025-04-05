@@ -1,17 +1,14 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-
 interface Props {
   onThemeChange: (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
   currentTheme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
-
 const HeroSection: React.FC<Props> = ({
   onThemeChange,
   currentTheme
 }) => {
-  return <section className="relative pt-32 pb-6 overflow-hidden">
+  return <section className="relative pt-32 pb-32 overflow-hidden">
       {/* Improved bottom gradient fade */}
       <div className="absolute inset-0 bg-gradient-to-b from-brand-50 via-brand-50 to-white -z-10"></div>
       
@@ -41,5 +38,4 @@ const HeroSection: React.FC<Props> = ({
       </div>
     </section>;
 };
-
 export default HeroSection;
