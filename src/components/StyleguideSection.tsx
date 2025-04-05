@@ -12,14 +12,14 @@ const StyleguideSection: React.FC<Props> = ({
   theme,
   onThemeChange
 }) => {
-  const allThemes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = ['default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'];
+  const allThemes: Array<'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = ['eco', 'tech', 'luxury', 'playful', 'minimalist'];
   const [api, setApi] = React.useState<CarouselApi>();
   const initialThemeSet = useRef(false);
 
   // Sync carousel position with current theme
   useEffect(() => {
     if (api && theme !== 'empty' && theme !== 'default') {
-      const themeIndex = allThemes.indexOf(theme);
+      const themeIndex = allThemes.indexOf(theme as any);
       if (themeIndex >= 0) {
         api.scrollTo(themeIndex);
         initialThemeSet.current = true;
@@ -44,7 +44,7 @@ const StyleguideSection: React.FC<Props> = ({
                       onClick={() => onThemeChange(themeStyle)} 
                       className={`h-16 w-full rounded-md flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 group 
                         ${themeStyle === theme ? 'ring-2 ring-offset-1' : 'border border-gray-100'} 
-                        ${themeStyle === 'default' ? 'bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300' : themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
+                        ${themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
                     >
                       <div className="text-center relative">
                         {/* Instagram-style active indicator */}

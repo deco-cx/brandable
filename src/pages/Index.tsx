@@ -10,7 +10,7 @@ import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
 
 const Index = () => {
-  const [currentTheme, setCurrentTheme] = useState<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty'>('empty');
+  const [currentTheme, setCurrentTheme] = useState<'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty'>('empty');
   const [autoSwitchTheme, setAutoSwitchTheme] = useState(true);
   const [transitionInProgress, setTransitionInProgress] = useState(false);
   
@@ -18,8 +18,8 @@ const Index = () => {
   useEffect(() => {
     if (!autoSwitchTheme) return;
     
-    const themes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = [
-      'default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'
+    const themes: Array<'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = [
+      'eco', 'tech', 'luxury', 'playful', 'minimalist'
     ];
     
     const interval = setInterval(() => {
@@ -30,7 +30,7 @@ const Index = () => {
           // If we're currently in empty state, stay in it (will be managed by chat)
           if (prevTheme === 'empty') return 'empty';
           
-          const currentIndex = themes.indexOf(prevTheme);
+          const currentIndex = themes.indexOf(prevTheme as any);
           const nextIndex = (currentIndex + 1) % themes.length;
           return themes[nextIndex];
         });
@@ -45,7 +45,7 @@ const Index = () => {
     return () => clearInterval(interval);
   }, [autoSwitchTheme, transitionInProgress]);
   
-  const handleThemeChange = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
+  const handleThemeChange = (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
     if (transitionInProgress) return;
     
     setTransitionInProgress(true);

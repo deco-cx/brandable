@@ -185,12 +185,6 @@ const StyleguidePreview: React.FC<Props> = ({ theme }) => {
           </div>
         </div>
       </div>
-      
-      <div className="mt-6 flex justify-center">
-        <div className={`h-10 px-6 ${buttonClass} rounded-full flex items-center justify-center text-sm font-medium transition-colors duration-700`}>
-          {buttonLabel}
-        </div>
-      </div>
 
       <div className="mt-5 border-t pt-5">
         <h4 className="text-sm font-medium text-gray-500 mb-2">Landing Page Generator</h4>
