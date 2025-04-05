@@ -54,10 +54,10 @@ const Index = () => {
         <HeroSection onThemeChange={handleThemeChange} currentTheme={currentTheme} />
         
         {/* Carousel moved to top, above both chat and styleguide */}
-        <div className="container mx-auto px-4 mb-6 max-w-xl">
+        <div className="container mx-auto px-4 mb-6 max-w-3xl">
           <Carousel className="mx-auto" setApi={setApi}>
             <CarouselContent>
-              {allThemes.map(themeStyle => <CarouselItem key={themeStyle} className="basis-1/3 md:basis-1/4">
+              {allThemes.map(themeStyle => <CarouselItem key={themeStyle} className="basis-1/3 md:basis-1/5">
                   <div className="p-1">
                     <button 
                       onClick={() => handleThemeChange(themeStyle)} 
