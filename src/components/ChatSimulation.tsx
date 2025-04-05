@@ -87,9 +87,6 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     setCurrentIndex(0);
     setCurrentConversation(conversationIndex);
     setIsPlaying(true);
-    
-    // Reset to default theme briefly for visual feedback
-    onThemeChange('default');
   };
 
   // Watch for theme changes from parent and start corresponding conversation
@@ -101,7 +98,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
       return currentTheme !== theme && theme !== 'default';
     };
     
-    // Get the current theme from URL parameters or props
+    // Get the current theme from URL parameters
     const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | null;
     
     if (currentThemeParam && hasThemeChanged(currentThemeParam)) {
@@ -128,14 +125,21 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
 
   useEffect(() => {
     // Reset the chat simulation after all messages in current conversation are displayed
+    // but continue directly to the next conversation without going back to default
     if (visibleMessages.length === conversations[currentConversation].length && isPlaying) {
       const resetTimer = setTimeout(() => {
+        // Move to next conversation, or back to first if we've gone through all
+        const nextConversation = (currentConversation + 1) % conversations.length;
+        
+        // Apply theme for the next conversation
+        const themeMessage = conversations[nextConversation].find(msg => msg.theme);
+        if (themeMessage && themeMessage.theme) {
+          onThemeChange(themeMessage.theme);
+        }
+        
         setVisibleMessages([]);
         setCurrentIndex(0);
-        // Move to next conversation, or back to first if we've gone through all
-        setCurrentConversation((prev) => (prev + 1) % conversations.length);
-        // Reset to default theme between conversations
-        onThemeChange('default');
+        setCurrentConversation(nextConversation);
       }, 5000);
 
       return () => clearTimeout(resetTimer);
@@ -143,7 +147,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   }, [visibleMessages.length, currentConversation, onThemeChange, isPlaying]);
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-xl h-[400px] overflow-y-auto flex flex-col">
+    <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-2xl h-[400px] overflow-y-auto flex flex-col">
       <div className="text-sm font-bold text-gray-500 mb-4 flex items-center">
         <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
         Brandable is interviewing you
@@ -162,7 +166,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
       </div>
       
       <div className="text-xs font-semibold text-gray-400 mt-4 text-center">
-        Click a brand style below to see customized themes
+        Click a brand style to see it come to life
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const Index = () => {
   const [currentTheme, setCurrentTheme] = useState<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'>('default');
   const [autoSwitchTheme, setAutoSwitchTheme] = useState(true);
   
-  // Auto-switching theme for the demonstration
+  // Auto-switching theme for the demonstration - continuous cycle without returning to default
   useEffect(() => {
     if (!autoSwitchTheme) return;
     

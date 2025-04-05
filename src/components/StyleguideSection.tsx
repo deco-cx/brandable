@@ -2,27 +2,27 @@
 import React from 'react';
 import StyleguidePreview from './StyleguidePreview';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+
 interface Props {
   theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
   onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => void;
 }
+
 const StyleguideSection: React.FC<Props> = ({
   theme,
   onThemeChange
 }) => {
   const allThemes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = ['default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'];
+  
   return <section id="styleguide" className="py-12 pt-0 relative mx-0 my-0">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-8">
           
         </div>
         
-        <div className="max-w-4xl mx-auto">
-          <StyleguidePreview theme={theme} />
-        </div>
-        
-        <div className="mt-8 max-w-4xl mx-auto">
-          <h3 className="text-center text-lg font-medium mb-4">Explore Different Brand Styles</h3>
+        {/* Moved carousel to the top, before the preview */}
+        <div className="mb-8 max-w-4xl mx-auto">
+          <h3 className="text-center text-lg font-bold mb-4">Explore Different Brand Styles</h3>
           <Carousel className="mx-auto">
             <CarouselContent>
               {allThemes.map(themeStyle => (
@@ -30,8 +30,8 @@ const StyleguideSection: React.FC<Props> = ({
                   <div className="p-1">
                     <button 
                       onClick={() => onThemeChange(themeStyle)}
-                      className={`h-24 w-full rounded-md flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 group 
-                        ${themeStyle === theme ? 'ring-4 ring-offset-2' : ''} 
+                      className={`h-16 w-full rounded-md flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 group 
+                        ${themeStyle === theme ? 'ring-2 ring-offset-1' : 'border border-gray-100'} 
                         ${themeStyle === 'default' ? 'bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300' : 
                           themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : 
                           themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : 
@@ -47,7 +47,6 @@ const StyleguideSection: React.FC<Props> = ({
                           </div>
                         )}
                         <div className="capitalize font-bold">{themeStyle}</div>
-                        <div className="text-xs opacity-70 font-medium">Brand Style</div>
                       </div>
                     </button>
                   </div>
@@ -57,6 +56,10 @@ const StyleguideSection: React.FC<Props> = ({
             <CarouselPrevious className="-left-5 bg-white" />
             <CarouselNext className="-right-5 bg-white" />
           </Carousel>
+        </div>
+        
+        <div className="max-w-4xl mx-auto">
+          <StyleguidePreview theme={theme} />
         </div>
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -93,4 +96,5 @@ const StyleguideSection: React.FC<Props> = ({
       </div>
     </section>;
 };
+
 export default StyleguideSection;
