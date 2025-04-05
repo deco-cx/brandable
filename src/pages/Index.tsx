@@ -42,14 +42,18 @@ const Index = () => {
       <main>
         <HeroSection onThemeChange={handleThemeChange} currentTheme={currentTheme} />
         
-        {/* Chat simulation carousel is placed between Hero and Styleguide sections */}
+        {/* Changed to side-by-side layout with chat on left, styleguide on right */}
         <div className="container mx-auto px-4 mb-12">
-          <div className="max-w-4xl mx-auto">
-            <ChatSimulation onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:order-1">
+              <ChatSimulation onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+            </div>
+            <div className="md:order-2">
+              <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
+            </div>
           </div>
         </div>
         
-        <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
         <GeneratorSection theme={currentTheme} />
         <ModelSection />
         <DecoSection />
