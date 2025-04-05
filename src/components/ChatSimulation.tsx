@@ -22,7 +22,6 @@ enum StepState {
 
 const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
   const [visibleMessages, setVisibleMessages] = useState<Message[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [currentConversation, setCurrentConversation] = useState(0);
   const [stepState, setStepState] = useState<StepState>(StepState.INITIAL_MESSAGES);
   const [userSelectedTheme, setUserSelectedTheme] = useState<boolean>(false);
@@ -90,7 +89,6 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     
     // Reset chat state
     setVisibleMessages([]);
-    setCurrentIndex(0);
     setCurrentConversation(conversationIndex);
     setStepState(StepState.INITIAL_MESSAGES);
     setUserSelectedTheme(true);
@@ -104,11 +102,10 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
 
   // Handle the progression of the conversation for a brand
   const startConversationFlow = (conversationIndex: number) => {
+    console.log('Starting conversation flow for', conversationIndex);
+    
     // Total duration of the entire cycle
     const totalDuration = 15000; // 15 seconds
-    
-    // Initial messages phase (30% of total time)
-    const initialPhaseTime = totalDuration * 0.3;
     
     // Make sure to start with empty theme
     onThemeChange('empty');
@@ -128,6 +125,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
         
         // Apply the brand theme
         if (suggestion.theme && suggestion.theme !== 'empty') {
+          console.log('Setting theme to', suggestion.theme);
           onThemeChange(suggestion.theme);
         }
         
@@ -147,14 +145,14 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
               setCurrentConversation(nextConversation);
               setStepState(StepState.INITIAL_MESSAGES);
               
-              // Reset to empty state
+              // Reset to empty state before starting next conversation
               onThemeChange('empty');
               
               // Start the next conversation
               startConversationFlow(nextConversation);
             }, totalDuration * 0.5); // Reduce time after thank you message
           }
-        }, 2000); // Delay for thank you message
+        }, thankYouMessages[conversationIndex].delay);
         
       }, brandResponses[conversationIndex].delay);
     }, initialMessages[0].delay);
@@ -165,7 +163,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     // Only respond to theme changes from outside (carousel clicks, URL params) 
     // if they're valid themes and we're not already showing that theme
     if (currentTheme !== 'empty' && 
-        currentTheme !== ['eco', 'tech', 'luxury', 'playful', 'minimalist'][currentConversation]) {
+        currentTheme !== themedSuggestions[currentConversation].theme) {
       const themeIndex = themeToConversationMap[currentTheme];
       if (themeIndex !== undefined) {
         startConversationForTheme(currentTheme);
@@ -175,9 +173,14 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
 
   // Initial setup - start the first conversation if no theme is selected
   useEffect(() => {
-    if (currentTheme === 'empty' && !userSelectedTheme) {
-      // Begin with the first conversation
-      startConversationFlow(0);
+    if (!userSelectedTheme) {
+      // Begin with empty theme
+      onThemeChange('empty');
+      
+      // Begin with the first conversation after a short delay
+      setTimeout(() => {
+        startConversationFlow(0);
+      }, 500);
     }
     
     return () => {
