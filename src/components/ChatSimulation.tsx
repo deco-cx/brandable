@@ -156,7 +156,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   }, [visibleMessages.length, currentConversation, onThemeChange, isPlaying, isThemeChanging]);
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-2xl h-[400px] overflow-y-auto flex flex-col">
+    <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-3xl h-[500px] overflow-y-auto flex flex-col">
       <div className="text-sm font-bold text-gray-500 mb-4 flex items-center">
         <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
         Brandable is interviewing you
