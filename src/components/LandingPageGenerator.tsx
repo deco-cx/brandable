@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
-
 interface Props {
   theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
-
-const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
+const LandingPageGenerator: React.FC<Props> = ({
+  theme
+}) => {
   const [showCode, setShowCode] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  
   useEffect(() => {
     const codeTimer = setTimeout(() => {
       setShowCode(true);
     }, 1000);
-    
     const previewTimer = setTimeout(() => {
       setShowPreview(true);
     }, 2500);
-    
     return () => {
       clearTimeout(codeTimer);
       clearTimeout(previewTimer);
@@ -26,7 +23,7 @@ const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
 
   // Theme-specific styling
   const getThemeStyles = () => {
-    switch(theme) {
+    switch (theme) {
       case 'eco':
         return {
           text: 'text-green-800',
@@ -97,7 +94,8 @@ const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
           ctaLabel: 'See Our Work',
           gradientBg: 'bg-gradient-to-br from-neutral-50 to-neutral-100'
         };
-      default: // 'empty'
+      default:
+        // 'empty'
         return {
           text: 'text-brand-700',
           bg: 'bg-brand-100',
@@ -113,11 +111,8 @@ const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
         };
     }
   };
-
   const styles = getThemeStyles();
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+  return <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
       <div className="space-y-6">
         <h3 className={`text-2xl md:text-3xl font-bold ${styles.text}`}>
           From Chat to Page — Instantly.
@@ -143,15 +138,7 @@ const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
           </div>
         </div>
         
-        <div className="flex items-center space-x-3">
-          <button className={`px-6 py-2 rounded-full ${styles.button} transition-colors duration-700`}>
-            Generate a Page
-          </button>
-          <button className="text-gray-600 hover:text-gray-900 flex items-center space-x-1 transition-colors">
-            <span>Learn how it works</span>
-            <ArrowRight className="h-4 w-4" />
-          </button>
-        </div>
+        
       </div>
       
       <div className={`bg-white shadow-xl rounded-lg overflow-hidden transform transition-all duration-500 ${showPreview ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -175,8 +162,6 @@ const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default LandingPageGenerator;
