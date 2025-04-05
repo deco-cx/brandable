@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
@@ -13,9 +12,7 @@ const CtaSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
           <Sparkles className="h-12 w-12 text-white/80 mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Try Brandable.chat and ship your next page in your brand's voice.
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Try Brandable and ship your next page in your brand's voice.</h2>
           <p className="text-xl text-white/80 mb-8">
             Join hundreds of brands who are creating consistent, on-brand experiences with Brandable.
           </p>
