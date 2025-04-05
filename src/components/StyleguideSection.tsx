@@ -36,38 +36,6 @@ const StyleguideSection: React.FC<Props> = ({
         <div className="max-w-4xl mx-auto">
           <StyleguidePreview theme={theme} />
         </div>
-        
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-            <div className="h-12 w-12 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-brand-600 font-bold">1</span>
-            </div>
-            <h3 className="text-lg font-medium mb-2">Brand Analysis</h3>
-            <p className="text-gray-600 text-sm">
-              Brandable analyzes your existing brand assets and website.
-            </p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-            <div className="h-12 w-12 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-brand-600 font-bold">2</span>
-            </div>
-            <h3 className="text-lg font-medium mb-2">Style Extraction</h3>
-            <p className="text-gray-600 text-sm">
-              Colors, typography, and design elements are identified and extracted.
-            </p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-            <div className="h-12 w-12 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-brand-600 font-bold">3</span>
-            </div>
-            <h3 className="text-lg font-medium mb-2">Voice Matching</h3>
-            <p className="text-gray-600 text-sm">
-              Your brand's tone of voice is captured for consistent messaging.
-            </p>
-          </div>
-        </div>
       </div>
     </section>;
 };
