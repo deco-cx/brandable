@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import StyleguidePreview from './StyleguidePreview';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+import ChatSimulation from './ChatSimulation';
 
 interface Props {
   theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
@@ -33,7 +34,11 @@ const StyleguideSection: React.FC<Props> = ({
           
         </div>
         
-        {/* Moved carousel to the top, before the preview */}
+        <div className="mb-12 max-w-4xl mx-auto">
+          <ChatSimulation onThemeChange={onThemeChange} currentTheme={theme} />
+        </div>
+        
+        {/* Carousel for theme selection */}
         <div className="mb-8 max-w-4xl mx-auto">
           <h3 className="text-center text-lg font-bold mb-4">Explore Different Brand Styles</h3>
           <Carousel className="mx-auto" setApi={setApi}>
@@ -47,8 +52,6 @@ const StyleguideSection: React.FC<Props> = ({
                         ${themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
                     >
                       <div className="text-center relative">
-                        {/* Instagram-style active indicator */}
-                        {themeStyle === theme}
                         <div className="capitalize font-bold">{themeStyle}</div>
                       </div>
                     </button>

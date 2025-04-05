@@ -11,60 +11,28 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   const [currentTheme, setCurrentTheme] = useState<'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty'>('empty');
-  const [autoSwitchTheme, setAutoSwitchTheme] = useState(true);
-  const [transitionInProgress, setTransitionInProgress] = useState(false);
   
-  // Auto-switching theme for the demonstration
+  // Check for theme in URL on initial load
   useEffect(() => {
-    if (!autoSwitchTheme) return;
+    const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty' | null;
     
-    const themes: Array<'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = [
-      'eco', 'tech', 'luxury', 'playful', 'minimalist'
-    ];
-    
-    const interval = setInterval(() => {
-      if (!transitionInProgress) {
-        setTransitionInProgress(true);
-        
-        setCurrentTheme(prevTheme => {
-          // If we're currently in empty state, stay in it (will be managed by chat)
-          if (prevTheme === 'empty') return 'empty';
-          
-          const currentIndex = themes.indexOf(prevTheme as any);
-          const nextIndex = (currentIndex + 1) % themes.length;
-          return themes[nextIndex];
-        });
-        
-        // Allow time for transition to complete
-        setTimeout(() => {
-          setTransitionInProgress(false);
-        }, 1000);
+    if (currentThemeParam) {
+      const validThemes = ['eco', 'tech', 'luxury', 'playful', 'minimalist'];
+      if (validThemes.includes(currentThemeParam)) {
+        handleThemeChange(currentThemeParam as any);
       }
-    }, 8000); // Switch theme every 8 seconds
-    
-    return () => clearInterval(interval);
-  }, [autoSwitchTheme, transitionInProgress]);
+    }
+  }, []);
   
   const handleThemeChange = (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
-    if (transitionInProgress) return;
-    
-    setTransitionInProgress(true);
     setCurrentTheme(theme);
     
-    // Only stop auto switching when user manually selects a non-empty theme
+    // Update URL with theme parameter for bookmarking/sharing, but only for non-empty themes
     if (theme !== 'empty') {
-      setAutoSwitchTheme(false);
-      
-      // Update URL with theme parameter for bookmarking/sharing
       const url = new URL(window.location.href);
       url.searchParams.set('theme', theme);
       window.history.replaceState({}, '', url.toString());
     }
-    
-    // Reset transition state after animation completes
-    setTimeout(() => {
-      setTransitionInProgress(false);
-    }, 1000);
   };
 
   return (
