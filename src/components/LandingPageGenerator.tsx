@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 interface Props {
-  theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
+  theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
 
 const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
@@ -98,7 +97,7 @@ const LandingPageGenerator: React.FC<Props> = ({ theme }) => {
           ctaLabel: 'See Our Work',
           gradientBg: 'bg-gradient-to-br from-neutral-50 to-neutral-100'
         };
-      default: // 'default'
+      default: // 'empty'
         return {
           text: 'text-brand-700',
           bg: 'bg-brand-100',
