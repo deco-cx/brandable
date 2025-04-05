@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
@@ -19,9 +20,11 @@ const CtaSection: React.FC = () => {
             Join hundreds of brands who are creating consistent, on-brand experiences with Brandable.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="rounded-full px-8 bg-gray-900 hover:bg-gray-800 text-slate-100 font-bold">
-              Start Building
-            </Button>
+            <a href="https://deco.chat/brandable" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="rounded-full px-8 bg-gray-900 hover:bg-gray-800 text-slate-100 font-bold">
+                Start Building
+              </Button>
+            </a>
             
           </div>
           
