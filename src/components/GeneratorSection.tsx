@@ -3,7 +3,7 @@ import React from 'react';
 import LandingPageGenerator from './LandingPageGenerator';
 
 interface Props {
-  theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
+  theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
 
 const GeneratorSection: React.FC<Props> = ({ theme }) => {
