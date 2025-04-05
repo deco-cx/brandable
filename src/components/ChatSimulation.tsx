@@ -6,11 +6,11 @@ interface Message {
   text: string;
   sender: 'bot' | 'user';
   delay: number;
-  theme?: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
+  theme?: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
 
 interface Props {
-  onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
+  onThemeChange: (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
 }
 
 const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
@@ -19,6 +19,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   const [currentConversation, setCurrentConversation] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isThemeChanging, setIsThemeChanging] = useState(false);
+  const [hasAppliedTheme, setHasAppliedTheme] = useState(false);
 
   // Define all conversation sequences
   const conversations: Message[][] = [
@@ -71,7 +72,6 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
 
   // Map theme names to conversation indexes
   const themeToConversationMap: Record<string, number> = {
-    'default': 0, // Default to eco for demo purposes
     'empty': 0,
     'eco': 0,
     'tech': 1,
@@ -81,7 +81,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   };
 
   // Start a specific conversation based on theme selection
-  const startConversationForTheme = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
+  const startConversationForTheme = (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
     const conversationIndex = themeToConversationMap[theme] || 0;
     
     // Reset chat state
@@ -90,18 +90,19 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     setCurrentConversation(conversationIndex);
     setIsPlaying(true);
     setIsThemeChanging(false);
+    setHasAppliedTheme(false);
     
-    // Start with empty state
-    onThemeChange('empty');
+    // Start with empty state, then immediately apply the target theme for the carousel
+    onThemeChange(theme);
   };
 
   // Watch for theme changes from URL
   useEffect(() => {
-    const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty' | null;
+    const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty' | null;
     
     if (currentThemeParam) {
-      const currentVisible = visibleMessages.find(m => m.theme)?.theme;
-      if (currentVisible !== currentThemeParam && currentThemeParam !== 'default' && currentThemeParam !== 'empty') {
+      const validThemes = ['eco', 'tech', 'luxury', 'playful', 'minimalist'];
+      if (validThemes.includes(currentThemeParam)) {
         startConversationForTheme(currentThemeParam);
       }
     }
@@ -117,9 +118,10 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
       setCurrentIndex(prev => prev + 1);
 
       // When we reach a theme message, change theme and wait for animation to complete
-      if (message.theme) {
+      if (message.theme && message.theme !== 'empty' && !hasAppliedTheme) {
         setIsThemeChanging(true);
         onThemeChange(message.theme);
+        setHasAppliedTheme(true);
         
         // Add a timer to allow the theme to transition before continuing
         setTimeout(() => {
@@ -129,7 +131,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     }, conversations[currentConversation][currentIndex].delay);
 
     return () => clearTimeout(timer);
-  }, [currentIndex, currentConversation, onThemeChange, isPlaying, isThemeChanging]);
+  }, [currentIndex, currentConversation, onThemeChange, isPlaying, isThemeChanging, hasAppliedTheme]);
 
   // Transition to next conversation after current one completes
   useEffect(() => {
@@ -138,14 +140,16 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
       const resetTimer = setTimeout(() => {
         // Next conversation in sequence
         const nextConversation = (currentConversation + 1) % conversations.length;
+        const nextTheme = conversations[nextConversation][0].theme || 'empty';
         
         // Reset to empty state between conversations
-        onThemeChange('empty');
+        onThemeChange(nextTheme);
         
         // Clear messages and prepare for next conversation
         setTimeout(() => {
           setVisibleMessages([]);
           setCurrentIndex(0);
+          setHasAppliedTheme(false);
           
           // Brief pause before starting new conversation
           setTimeout(() => {
