@@ -1,9 +1,12 @@
 import React from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 interface Props {
   theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
 }
+
 const StyleguidePreview: React.FC<Props> = ({
   theme
 }) => {
@@ -254,8 +257,10 @@ const StyleguidePreview: React.FC<Props> = ({
           
           <div className="mt-4">
             <h4 className="text-sm font-medium text-gray-500 mb-2">Brand Voice</h4>
-            <div className={`p-3 rounded-lg bg-white/50 ${fontFamily} transition-all duration-700`}>
-              <p className={`${headingClass} text-sm`}>{brandVoice}</p>
+            <div className={`p-3 rounded-lg bg-white/50 ${fontFamily} transition-all duration-700`} style={{ height: '64px' }}>
+              <ScrollArea className="h-full w-full">
+                <p className={`${headingClass} text-sm`}>{brandVoice}</p>
+              </ScrollArea>
             </div>
           </div>
         </div>
@@ -283,4 +288,5 @@ const StyleguidePreview: React.FC<Props> = ({
       </div>
     </div>;
 };
+
 export default StyleguidePreview;
