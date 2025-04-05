@@ -33,31 +33,6 @@ const StyleguideSection: React.FC<Props> = ({
           
         </div>
         
-        {/* Carousel for theme selection */}
-        <div className="mb-8 max-w-4xl mx-auto">
-          <h3 className="text-center text-lg font-bold mb-4">Explore Different Brand Styles</h3>
-          <Carousel className="mx-auto" setApi={setApi}>
-            <CarouselContent>
-              {allThemes.map(themeStyle => <CarouselItem key={themeStyle} className="basis-1/3 md:basis-1/4">
-                  <div className="p-1">
-                    <button 
-                      onClick={() => onThemeChange(themeStyle)} 
-                      className={`h-16 w-full rounded-md flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 group 
-                        ${themeStyle === theme ? 'ring-2 ring-offset-1' : 'border border-gray-100'} 
-                        ${themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
-                    >
-                      <div className="text-center relative">
-                        <div className="capitalize font-bold">{themeStyle}</div>
-                      </div>
-                    </button>
-                  </div>
-                </CarouselItem>)}
-            </CarouselContent>
-            <CarouselPrevious className="-left-5 bg-white" />
-            <CarouselNext className="-right-5 bg-white" />
-          </Carousel>
-        </div>
-        
         <div className="max-w-4xl mx-auto">
           <StyleguidePreview theme={theme} />
         </div>
