@@ -5,6 +5,7 @@ import HeroSection from '../components/HeroSection';
 import StyleguideSection from '../components/StyleguideSection';
 import GeneratorSection from '../components/GeneratorSection';
 import ModelSection from '../components/ModelSection';
+import DecoSection from '../components/DecoSection';
 import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
 
@@ -23,6 +24,7 @@ const Index = () => {
         <StyleguideSection theme={currentTheme} />
         <GeneratorSection theme={currentTheme} />
         <ModelSection />
+        <DecoSection />
         <CtaSection />
       </main>
       <Footer />
