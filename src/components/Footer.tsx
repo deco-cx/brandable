@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { Sparkles } from 'lucide-react';
-
 const Footer: React.FC = () => {
-  return (
-    <footer className="bg-gray-50 py-12 border-t border-gray-100">
+  return <footer className="bg-gray-50 py-12 border-t border-gray-100">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -12,9 +9,7 @@ const Footer: React.FC = () => {
               <Sparkles className="h-5 w-5 text-brand-600" />
               <span className="text-lg font-bold">Brandable.chat</span>
             </div>
-            <p className="text-gray-500 text-sm">
-              Your brand identity, captured and ready to build with.
-            </p>
+            <p className="text-gray-500 text-sm">Your landing pages — always on-brand</p>
           </div>
           
           <div>
@@ -67,8 +62,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
