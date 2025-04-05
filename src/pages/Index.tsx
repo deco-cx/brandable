@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
 import StyleguideSection from '../components/StyleguideSection';
 import GeneratorSection from '../components/GeneratorSection';
+import ModelSection from '../components/ModelSection';
 import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
 
@@ -21,6 +22,7 @@ const Index = () => {
         <HeroSection onThemeChange={handleThemeChange} />
         <StyleguideSection theme={currentTheme} />
         <GeneratorSection theme={currentTheme} />
+        <ModelSection />
         <CtaSection />
       </main>
       <Footer />
