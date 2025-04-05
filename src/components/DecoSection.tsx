@@ -5,7 +5,7 @@ import { Github, ArrowRight, Server, Cloud } from 'lucide-react';
 
 const DecoSection: React.FC = () => {
   return (
-    <section className="py-20 bg-[#fcfbf6] text-[#1b401e]">
+    <section id="deco-section" className="py-20 bg-[#fcfbf6] text-[#1b401e]">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 flex flex-col items-center">
@@ -115,10 +115,15 @@ const DecoSection: React.FC = () => {
               </div>
               
               <div>
-                <Button className="bg-gradient-to-r from-[#9eca50] to-[#8ab948] hover:from-[#8ab948] hover:to-[#79a53c] text-white font-medium px-5 py-2 rounded-md transition transform hover:scale-105 inline-flex items-center">
+                <a 
+                  href="https://deco.chat/brandable" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-gradient-to-r from-[#9eca50] to-[#8ab948] hover:from-[#8ab948] hover:to-[#79a53c] text-white font-medium px-5 py-2 rounded-md transition transform hover:scale-105 inline-flex items-center"
+                >
                   Create Agent Now
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                </a>
               </div>
             </div>
           </div>

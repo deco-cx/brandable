@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 interface Props {
@@ -8,6 +9,10 @@ const HeroSection: React.FC<Props> = ({
   onThemeChange,
   currentTheme
 }) => {
+  const scrollToDecoSection = () => {
+    document.getElementById('deco-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return <section className="relative pt-32 pb-32 overflow-hidden">
       {/* Improved bottom gradient fade */}
       <div className="absolute inset-0 bg-gradient-to-b from-brand-50 via-brand-50 to-white -z-10"></div>
@@ -27,7 +32,11 @@ const HeroSection: React.FC<Props> = ({
             Brandable interviews you, captures your identity, and builds landing pages that are always on-brand. All in one agent.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-brand-600 hover:bg-brand-700 text-white rounded-md px-8 font-bold text-base" onClick={() => document.getElementById('styleguide')?.scrollIntoView()}>
+            <Button 
+              size="lg" 
+              className="bg-brand-600 hover:bg-brand-700 text-white rounded-md px-8 font-bold text-base" 
+              onClick={scrollToDecoSection}
+            >
               Build Yours Now
             </Button>
             <Button size="lg" variant="outline" className="border-brand-200 text-brand-700 hover:bg-brand-50 rounded-md px-8 font-bold text-base">
