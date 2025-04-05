@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import ChatSimulation from './ChatSimulation';
 
 interface Props {
-  onThemeChange: (theme: 'default' | 'eco') => void;
+  onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => void;
 }
 
 const HeroSection: React.FC<Props> = ({ onThemeChange }) => {

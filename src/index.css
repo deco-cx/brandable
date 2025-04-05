@@ -102,12 +102,12 @@
   }
 
   .gradient-background {
-    @apply bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300 animate-gradient-x;
+    @apply bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300;
     background-size: 200% 200%;
   }
   
   .eco-background {
-    @apply bg-gradient-to-r from-green-200 via-green-100 to-purple-200 animate-gradient-x;
+    @apply bg-gradient-to-r from-green-200 via-green-100 to-purple-200;
     background-size: 200% 200%;
   }
 

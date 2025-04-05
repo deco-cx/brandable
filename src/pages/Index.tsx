@@ -9,9 +9,9 @@ import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
 
 const Index = () => {
-  const [currentTheme, setCurrentTheme] = useState<'default' | 'eco'>('default');
+  const [currentTheme, setCurrentTheme] = useState<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'>('default');
   
-  const handleThemeChange = (theme: 'default' | 'eco') => {
+  const handleThemeChange = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => {
     setCurrentTheme(theme);
   };
 
