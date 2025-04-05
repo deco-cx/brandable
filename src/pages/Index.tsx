@@ -35,6 +35,11 @@ const Index = () => {
   const handleThemeChange = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => {
     setCurrentTheme(theme);
     setAutoSwitchTheme(false); // Stop auto switching when user manually selects a theme
+    
+    // Update URL with theme parameter for bookmarking/sharing
+    const url = new URL(window.location.href);
+    url.searchParams.set('theme', theme);
+    window.history.replaceState({}, '', url.toString());
   };
 
   return (
@@ -42,7 +47,7 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection onThemeChange={handleThemeChange} />
-        <StyleguideSection theme={currentTheme} />
+        <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
         <GeneratorSection theme={currentTheme} />
         <ModelSection />
         <DecoSection />

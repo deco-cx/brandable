@@ -17,6 +17,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   const [visibleMessages, setVisibleMessages] = useState<Message[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentConversation, setCurrentConversation] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   // Define all conversation sequences
   const conversations: Message[][] = [
@@ -67,8 +68,49 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     ]
   ];
 
+  // Map theme names to conversation indexes
+  const themeToConversationMap: Record<string, number> = {
+    'default': 0, // Default to eco for demo purposes
+    'eco': 0,
+    'tech': 1,
+    'luxury': 2,
+    'playful': 3,
+    'minimalist': 4
+  };
+
+  // Start a specific conversation based on theme selection
+  const startConversationForTheme = (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => {
+    const conversationIndex = themeToConversationMap[theme] || 0;
+    
+    // Reset chat state
+    setVisibleMessages([]);
+    setCurrentIndex(0);
+    setCurrentConversation(conversationIndex);
+    setIsPlaying(true);
+    
+    // Reset to default theme briefly for visual feedback
+    onThemeChange('default');
+  };
+
+  // Watch for theme changes from parent and start corresponding conversation
   useEffect(() => {
-    if (currentIndex >= conversations[currentConversation].length) return;
+    // This effect handles external theme changes from the carousel
+    const hasThemeChanged = theme => {
+      // Get the current visible theme (if any)
+      const currentTheme = visibleMessages.find(m => m.theme)?.theme;
+      return currentTheme !== theme && theme !== 'default';
+    };
+    
+    // Get the current theme from URL parameters or props
+    const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | null;
+    
+    if (currentThemeParam && hasThemeChanged(currentThemeParam)) {
+      startConversationForTheme(currentThemeParam);
+    }
+  }, [window.location.search]);
+
+  useEffect(() => {
+    if (!isPlaying || currentIndex >= conversations[currentConversation].length) return;
 
     const timer = setTimeout(() => {
       const message = conversations[currentConversation][currentIndex];
@@ -82,11 +124,11 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     }, conversations[currentConversation][currentIndex].delay);
 
     return () => clearTimeout(timer);
-  }, [currentIndex, currentConversation, onThemeChange]);
+  }, [currentIndex, currentConversation, onThemeChange, isPlaying]);
 
   useEffect(() => {
     // Reset the chat simulation after all messages in current conversation are displayed
-    if (visibleMessages.length === conversations[currentConversation].length) {
+    if (visibleMessages.length === conversations[currentConversation].length && isPlaying) {
       const resetTimer = setTimeout(() => {
         setVisibleMessages([]);
         setCurrentIndex(0);
@@ -98,7 +140,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
 
       return () => clearTimeout(resetTimer);
     }
-  }, [visibleMessages.length, currentConversation, onThemeChange]);
+  }, [visibleMessages.length, currentConversation, onThemeChange, isPlaying]);
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-xl h-[400px] overflow-y-auto flex flex-col">
@@ -120,7 +162,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
       </div>
       
       <div className="text-xs font-semibold text-gray-400 mt-4 text-center">
-        Watch as the page theme updates based on your brand
+        Click a brand style below to see customized themes
       </div>
     </div>
   );
