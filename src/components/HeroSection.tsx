@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import ChatSimulation from './ChatSimulation';
 
 interface Props {
   onThemeChange: (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => void;
@@ -23,28 +22,20 @@ const HeroSection: React.FC<Props> = ({
     }} className="absolute top-20 left-10 h-64 w-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-slow"></div>
       
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="text-center lg:text-left max-w-xl mx-auto lg:mx-0">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-brand-700 to-brand-900 tracking-tight">
-              Create a Lovable for your brand.
-            </h1>
-            <p className="text-xl font-semibold text-gray-700 mb-8">
-              Brandable interviews you, captures your identity, and builds landing pages that are always on-brand. All in one agent.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="bg-brand-600 hover:bg-brand-700 text-white rounded-md px-8 font-bold text-base" onClick={() => document.getElementById('styleguide')?.scrollIntoView()}>
-                Build Yours Now
-              </Button>
-              <Button size="lg" variant="outline" className="border-brand-200 text-brand-700 hover:bg-brand-50 rounded-md px-8 font-bold text-base">
-                Watch Demo
-              </Button>
-            </div>
-          </div>
-          
-          <div className="flex justify-center lg:justify-end">
-            <div className="transform transition-all duration-500 hover:scale-105 w-full max-w-xl">
-              <ChatSimulation onThemeChange={onThemeChange} currentTheme={currentTheme} />
-            </div>
+        <div className="text-center max-w-xl mx-auto">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-brand-700 to-brand-900 tracking-tight">
+            Create a Lovable for your brand.
+          </h1>
+          <p className="text-xl font-semibold text-gray-700 mb-8">
+            Brandable interviews you, captures your identity, and builds landing pages that are always on-brand. All in one agent.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-brand-600 hover:bg-brand-700 text-white rounded-md px-8 font-bold text-base" onClick={() => document.getElementById('styleguide')?.scrollIntoView()}>
+              Build Yours Now
+            </Button>
+            <Button size="lg" variant="outline" className="border-brand-200 text-brand-700 hover:bg-brand-50 rounded-md px-8 font-bold text-base">
+              Watch Demo
+            </Button>
           </div>
         </div>
       </div>

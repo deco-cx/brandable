@@ -2,7 +2,6 @@
 import React, { useEffect, useRef } from 'react';
 import StyleguidePreview from './StyleguidePreview';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
-import ChatSimulation from './ChatSimulation';
 
 interface Props {
   theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty';
@@ -32,10 +31,6 @@ const StyleguideSection: React.FC<Props> = ({
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-8">
           
-        </div>
-        
-        <div className="mb-12 max-w-4xl mx-auto">
-          <ChatSimulation onThemeChange={onThemeChange} currentTheme={theme} />
         </div>
         
         {/* Carousel for theme selection */}

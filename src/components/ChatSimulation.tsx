@@ -16,9 +16,8 @@ interface Props {
 
 // Define the states for our carousel steps
 enum StepState {
-  WAITING_FOR_INPUT = 'waiting_for_input', // Initial empty state with first messages
-  BRANDED = 'branded',                     // Branded state with theme applied
-  TRANSITIONING = 'transitioning'          // Transition between states
+  WAITING_FOR_INPUT = 'waiting_for_input', // Initial empty state with first messages (30% of step time)
+  BRANDED = 'branded',                     // Branded state with theme applied (70% of step time)
 }
 
 const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
@@ -107,12 +106,18 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     'minimalist': 4
   };
 
+  // Clear all timers
+  const clearAllTimers = () => {
+    if (stateTimerRef.current) {
+      clearTimeout(stateTimerRef.current);
+      stateTimerRef.current = null;
+    }
+  };
+
   // Start a specific conversation based on theme selection
   const startConversationForTheme = (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
     // Clear any existing timers
-    if (stateTimerRef.current) {
-      clearTimeout(stateTimerRef.current);
-    }
+    clearAllTimers();
     
     // If theme is empty, don't do anything specific
     if (theme === 'empty') return;
@@ -238,9 +243,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     
     return () => {
       // Cleanup any timers on unmount
-      if (stateTimerRef.current) {
-        clearTimeout(stateTimerRef.current);
-      }
+      clearAllTimers();
     };
   }, []);
 

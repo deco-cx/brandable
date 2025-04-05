@@ -8,6 +8,7 @@ import ModelSection from '../components/ModelSection';
 import DecoSection from '../components/DecoSection';
 import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
+import ChatSimulation from '../components/ChatSimulation';
 
 const Index = () => {
   const [currentTheme, setCurrentTheme] = useState<'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty'>('empty');
@@ -40,6 +41,14 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+        
+        {/* Chat simulation carousel is placed between Hero and Styleguide sections */}
+        <div className="container mx-auto px-4 mb-12">
+          <div className="max-w-4xl mx-auto">
+            <ChatSimulation onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+          </div>
+        </div>
+        
         <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
         <GeneratorSection theme={currentTheme} />
         <ModelSection />
