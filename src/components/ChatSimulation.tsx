@@ -26,6 +26,9 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
   const [stepState, setStepState] = useState<StepState>(StepState.INITIAL_MESSAGES);
   const [userSelectedTheme, setUserSelectedTheme] = useState<boolean>(false);
   const stateTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+  const isManuallyChangedRef = useRef<boolean>(false);
+  const initialRenderRef = useRef<boolean>(true);
   
   // Initial messages that are the same for all brands (first 2 messages)
   const initialMessages: Message[] = [
@@ -71,14 +74,22 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
 
   // Clear all timers
   const clearAllTimers = () => {
+    console.log('Clearing all timers');
     if (stateTimerRef.current) {
       clearTimeout(stateTimerRef.current);
       stateTimerRef.current = null;
     }
+    
+    // Clear all timeouts in the array
+    timeoutsRef.current.forEach(timeout => {
+      clearTimeout(timeout);
+    });
+    timeoutsRef.current = [];
   };
 
   // Start a specific conversation based on theme selection
   const startConversationForTheme = (theme: 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | 'empty') => {
+    console.log('Starting conversation for theme:', theme);
     // Clear any existing timers
     clearAllTimers();
     
@@ -92,33 +103,33 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
     setCurrentConversation(conversationIndex);
     setStepState(StepState.INITIAL_MESSAGES);
     setUserSelectedTheme(true);
+    isManuallyChangedRef.current = true;
     
-    // Start with empty state
+    // Start with empty state (only briefly)
     onThemeChange('empty');
     
     // Begin the conversation flow for this theme
-    startConversationFlow(conversationIndex);
+    startConversationFlow(conversationIndex, true);
   };
 
   // Handle the progression of the conversation for a brand
-  const startConversationFlow = (conversationIndex: number) => {
-    console.log('Starting conversation flow for', conversationIndex);
-    
-    // Total duration of the entire cycle
-    const totalDuration = 15000; // 15 seconds
+  const startConversationFlow = (conversationIndex: number, isManualSelection = false) => {
+    console.log('Starting conversation flow for', conversationIndex, 'isManual:', isManualSelection);
     
     // Make sure to start with empty theme
-    onThemeChange('empty');
+    if (!isManualSelection) {
+      onThemeChange('empty');
+    }
     
     // Reset visible messages and start with initial message
     setVisibleMessages([initialMessages[0]]);
     
     // Add user response after a delay
-    setTimeout(() => {
+    const timeout1 = setTimeout(() => {
       setVisibleMessages(prev => [...prev, brandResponses[conversationIndex]]);
       
       // Schedule the themed suggestion (this transitions to themed state)
-      setTimeout(() => {
+      const timeout2 = setTimeout(() => {
         // Show the themed suggestion and apply the theme
         const suggestion = themedSuggestions[conversationIndex];
         setVisibleMessages(prev => [...prev, suggestion]);
@@ -132,11 +143,11 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
         setStepState(StepState.THEMED_DISPLAY);
         
         // Add thank you message after a delay
-        setTimeout(() => {
+        const timeout3 = setTimeout(() => {
           setVisibleMessages(prev => [...prev, thankYouMessages[conversationIndex]]);
           
-          // If user hasn't manually selected a theme, set timer to move to next brand
-          if (!userSelectedTheme) {
+          // If auto-playing (not manually selected), set timer to move to next brand
+          if (!isManuallyChangedRef.current && !userSelectedTheme) {
             stateTimerRef.current = setTimeout(() => {
               const nextConversation = (conversationIndex + 1) % brandResponses.length;
               
@@ -150,22 +161,35 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
               
               // Start the next conversation
               startConversationFlow(nextConversation);
-            }, totalDuration * 0.5); // Reduce time after thank you message
+            }, 5000); // Wait for 5 seconds before starting the next conversation
+            timeoutsRef.current.push(stateTimerRef.current);
           }
         }, thankYouMessages[conversationIndex].delay);
+        timeoutsRef.current.push(timeout3);
         
       }, brandResponses[conversationIndex].delay);
+      timeoutsRef.current.push(timeout2);
     }, initialMessages[0].delay);
+    timeoutsRef.current.push(timeout1);
   };
 
   // Watch for theme changes from parent component or URL
   useEffect(() => {
+    // Skip the initial render with empty theme to avoid immediate theme change
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+      return;
+    }
+    
+    console.log('Current theme changed to:', currentTheme);
+    
     // Only respond to theme changes from outside (carousel clicks, URL params) 
     // if they're valid themes and we're not already showing that theme
     if (currentTheme !== 'empty' && 
         currentTheme !== themedSuggestions[currentConversation].theme) {
       const themeIndex = themeToConversationMap[currentTheme];
       if (themeIndex !== undefined) {
+        console.log('Starting conversation based on theme change to', currentTheme);
         startConversationForTheme(currentTheme);
       }
     }
@@ -173,15 +197,18 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
 
   // Initial setup - start the first conversation if no theme is selected
   useEffect(() => {
-    if (!userSelectedTheme) {
-      // Begin with empty theme
-      onThemeChange('empty');
-      
-      // Begin with the first conversation after a short delay
-      setTimeout(() => {
+    // Begin with empty theme
+    onThemeChange('empty');
+    
+    // Begin with the first conversation after a short delay
+    const startupTimer = setTimeout(() => {
+      if (!userSelectedTheme && !isManuallyChangedRef.current) {
+        console.log('Starting initial demo flow');
         startConversationFlow(0);
-      }, 500);
-    }
+      }
+    }, 500);
+    
+    timeoutsRef.current.push(startupTimer);
     
     return () => {
       // Cleanup any timers on unmount
