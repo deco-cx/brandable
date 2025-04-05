@@ -61,12 +61,12 @@ const Index = () => {
                   <div className="p-1">
                     <button 
                       onClick={() => handleThemeChange(themeStyle)} 
-                      className={`h-10 w-full rounded-md flex items-center justify-center p-1 transition-all duration-300 hover:scale-105 group 
+                      className={`h-8 w-full rounded-md flex items-center justify-center p-1 transition-all duration-300 hover:scale-105 group 
                         ${themeStyle === currentTheme ? 'ring-2 ring-offset-1' : 'border border-gray-100'} 
                         ${themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
                     >
                       <div className="text-center relative">
-                        <div className="capitalize font-bold text-sm">{themeStyle}</div>
+                        <div className="capitalize font-bold text-xs">{themeStyle}</div>
                       </div>
                     </button>
                   </div>
@@ -79,12 +79,16 @@ const Index = () => {
         
         {/* Side-by-side layout with chat on left, styleguide on right */}
         <div className="container mx-auto px-4 mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="md:order-1">
-              <ChatSimulation onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+            <div className="md:order-1 flex items-stretch">
+              <div className="w-full h-full flex">
+                <ChatSimulation onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+              </div>
             </div>
-            <div className="md:order-2">
-              <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
+            <div className="md:order-2 flex items-stretch">
+              <div className="w-full h-full flex">
+                <StyleguideSection theme={currentTheme} onThemeChange={handleThemeChange} />
+              </div>
             </div>
           </div>
         </div>

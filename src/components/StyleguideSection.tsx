@@ -27,13 +27,9 @@ const StyleguideSection: React.FC<Props> = ({
     }
   }, [api, theme, allThemes]);
   
-  return <section id="styleguide" className="py-12 pt-0 relative mx-0 my-0">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          
-        </div>
-        
-        <div className="max-w-4xl mx-auto">
+  return <section id="styleguide" className="py-12 pt-0 relative mx-0 my-0 w-full h-full flex items-center">
+      <div className="container mx-auto px-4 w-full h-full">
+        <div className="max-w-4xl mx-auto h-full flex items-center">
           <StyleguidePreview theme={theme} />
         </div>
       </div>
