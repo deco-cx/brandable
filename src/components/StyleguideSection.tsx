@@ -1,15 +1,32 @@
-import React from 'react';
+
+import React, { useEffect, useRef } from 'react';
 import StyleguidePreview from './StyleguidePreview';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+
 interface Props {
   theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
   onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => void;
 }
+
 const StyleguideSection: React.FC<Props> = ({
   theme,
   onThemeChange
 }) => {
   const allThemes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = ['default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'];
+  const [api, setApi] = React.useState<CarouselApi>();
+  const initialThemeSet = useRef(false);
+
+  // Sync carousel position with current theme
+  useEffect(() => {
+    if (api && theme !== 'default') {
+      const themeIndex = allThemes.indexOf(theme);
+      if (themeIndex >= 0) {
+        api.scrollTo(themeIndex);
+        initialThemeSet.current = true;
+      }
+    }
+  }, [api, theme, allThemes]);
+  
   return <section id="styleguide" className="py-12 pt-0 relative mx-0 my-0">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-8">
@@ -19,13 +36,16 @@ const StyleguideSection: React.FC<Props> = ({
         {/* Moved carousel to the top, before the preview */}
         <div className="mb-8 max-w-4xl mx-auto">
           <h3 className="text-center text-lg font-bold mb-4">Explore Different Brand Styles</h3>
-          <Carousel className="mx-auto">
+          <Carousel className="mx-auto" setApi={setApi}>
             <CarouselContent>
               {allThemes.map(themeStyle => <CarouselItem key={themeStyle} className="basis-1/3 md:basis-1/4">
                   <div className="p-1">
-                    <button onClick={() => onThemeChange(themeStyle)} className={`h-16 w-full rounded-md flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 group 
+                    <button 
+                      onClick={() => onThemeChange(themeStyle)} 
+                      className={`h-16 w-full rounded-md flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 group 
                         ${themeStyle === theme ? 'ring-2 ring-offset-1' : 'border border-gray-100'} 
-                        ${themeStyle === 'default' ? 'bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300' : themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}>
+                        ${themeStyle === 'default' ? 'bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300' : themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
+                    >
                       <div className="text-center relative">
                         {/* Instagram-style active indicator */}
                         {themeStyle === theme}

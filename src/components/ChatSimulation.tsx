@@ -18,6 +18,7 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentConversation, setCurrentConversation] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isThemeChanging, setIsThemeChanging] = useState(false);
 
   // Define all conversation sequences
   const conversations: Message[][] = [
@@ -87,64 +88,72 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange }) => {
     setCurrentIndex(0);
     setCurrentConversation(conversationIndex);
     setIsPlaying(true);
+    setIsThemeChanging(false);
   };
 
-  // Watch for theme changes from parent and start corresponding conversation
+  // Watch for theme changes from URL
   useEffect(() => {
-    // This effect handles external theme changes from the carousel
-    const hasThemeChanged = theme => {
-      // Get the current visible theme (if any)
-      const currentTheme = visibleMessages.find(m => m.theme)?.theme;
-      return currentTheme !== theme && theme !== 'default';
-    };
-    
-    // Get the current theme from URL parameters
     const currentThemeParam = new URLSearchParams(window.location.search).get('theme') as 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist' | null;
     
-    if (currentThemeParam && hasThemeChanged(currentThemeParam)) {
-      startConversationForTheme(currentThemeParam);
+    if (currentThemeParam) {
+      const currentVisible = visibleMessages.find(m => m.theme)?.theme;
+      if (currentVisible !== currentThemeParam && currentThemeParam !== 'default') {
+        startConversationForTheme(currentThemeParam);
+      }
     }
   }, [window.location.search]);
 
+  // Display messages with proper timing and synchronization
   useEffect(() => {
-    if (!isPlaying || currentIndex >= conversations[currentConversation].length) return;
+    if (!isPlaying || currentIndex >= conversations[currentConversation].length || isThemeChanging) return;
 
     const timer = setTimeout(() => {
       const message = conversations[currentConversation][currentIndex];
       setVisibleMessages(prev => [...prev, message]);
       setCurrentIndex(prev => prev + 1);
 
-      // Apply theme change when a message with a theme property is displayed
+      // When we reach a theme message, change theme and wait for animation to complete
       if (message.theme) {
+        setIsThemeChanging(true);
         onThemeChange(message.theme);
+        
+        // Add a timer to allow the theme to transition before continuing
+        setTimeout(() => {
+          setIsThemeChanging(false);
+        }, 1000); // 1 second pause for theme transition
       }
     }, conversations[currentConversation][currentIndex].delay);
 
     return () => clearTimeout(timer);
-  }, [currentIndex, currentConversation, onThemeChange, isPlaying]);
+  }, [currentIndex, currentConversation, onThemeChange, isPlaying, isThemeChanging]);
 
+  // Transition to next conversation after current one completes
   useEffect(() => {
-    // Reset the chat simulation after all messages in current conversation are displayed
-    // but continue directly to the next conversation without going back to default
-    if (visibleMessages.length === conversations[currentConversation].length && isPlaying) {
+    // When conversation is complete (all messages displayed)
+    if (visibleMessages.length === conversations[currentConversation].length && isPlaying && !isThemeChanging) {
       const resetTimer = setTimeout(() => {
-        // Move to next conversation, or back to first if we've gone through all
+        // Next conversation in sequence
         const nextConversation = (currentConversation + 1) % conversations.length;
         
-        // Apply theme for the next conversation
-        const themeMessage = conversations[nextConversation].find(msg => msg.theme);
-        if (themeMessage && themeMessage.theme) {
-          onThemeChange(themeMessage.theme);
-        }
+        // Find the theme message in the next conversation
+        const nextThemeMessage = conversations[nextConversation].find(msg => msg.theme);
         
-        setVisibleMessages([]);
-        setCurrentIndex(0);
-        setCurrentConversation(nextConversation);
-      }, 5000);
+        // Clean transition to the next theme
+        if (nextThemeMessage && nextThemeMessage.theme) {
+          // First clear messages
+          setVisibleMessages([]);
+          setCurrentIndex(0);
+          
+          // Brief pause before starting new conversation
+          setTimeout(() => {
+            setCurrentConversation(nextConversation);
+          }, 500);
+        }
+      }, 3000); // 3 second pause before next conversation starts
 
       return () => clearTimeout(resetTimer);
     }
-  }, [visibleMessages.length, currentConversation, onThemeChange, isPlaying]);
+  }, [visibleMessages.length, currentConversation, onThemeChange, isPlaying, isThemeChanging]);
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-2xl h-[400px] overflow-y-auto flex flex-col">
