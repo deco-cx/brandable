@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -123,27 +122,36 @@ const StyleguidePreview: React.FC<Props> = ({ theme }) => {
   }
 
   return (
-    <div className={`glass-card p-8 transition-all duration-1000 ${backgroundClass}`}>
-      <div className="text-center mb-10">
+    <div className={`glass-card p-6 transition-all duration-1000 ${backgroundClass}`}>
+      <div className="text-center mb-6">
         <h3 className={`text-2xl font-bold ${headingClass} mb-2 transition-colors duration-700`}>
           {brandName}
         </h3>
         <div className={`inline-block h-1 w-10 ${headingClass} rounded transition-colors duration-700`}></div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h4 className="text-sm font-medium text-gray-500 mb-3">Color Palette</h4>
-          <div className="flex flex-wrap gap-2">
-            {colorPalette.map((color, index) => (
-              <div key={index} className="text-center">
-                <div 
-                  className="h-8 w-8 rounded-full mb-1 mx-auto transition-colors duration-700" 
-                  style={{ backgroundColor: color.color }}
-                ></div>
-                <span className="text-xs block">{color.hex}</span>
-              </div>
-            ))}
+          <div>
+            <h4 className="text-sm font-medium text-gray-500 mb-3">Color Palette</h4>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {colorPalette.map((color, index) => (
+                <div key={index} className="text-center">
+                  <div 
+                    className="h-8 w-8 rounded-full mb-1 mx-auto transition-colors duration-700" 
+                    style={{ backgroundColor: color.color }}
+                  ></div>
+                  <span className="text-xs block">{color.hex}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="mt-4">
+            <h4 className="text-sm font-medium text-gray-500 mb-2">Brand Voice</h4>
+            <div className={`p-3 rounded-lg bg-white/50 ${fontFamily} transition-all duration-700`}>
+              <p className={`${headingClass} text-sm`}>{brandVoice}</p>
+            </div>
           </div>
         </div>
         
@@ -159,26 +167,18 @@ const StyleguidePreview: React.FC<Props> = ({ theme }) => {
         </div>
       </div>
       
-      <div className="mt-8">
-        <h4 className="text-sm font-medium text-gray-500 mb-3">Brand Voice</h4>
-        <div className={`p-4 rounded-lg bg-white/50 ${fontFamily} transition-all duration-700`}>
-          <p className={headingClass}>{brandVoice}</p>
-        </div>
-      </div>
-      
-      <div className="mt-8 flex justify-center">
+      <div className="mt-6 flex justify-center">
         <div className={`h-10 px-6 ${buttonClass} rounded-full flex items-center justify-center text-sm font-medium transition-colors duration-700`}>
           {buttonLabel}
         </div>
       </div>
 
-      {/* New Landing Page Generator section */}
-      <div className="mt-8 border-t pt-8">
-        <h4 className="text-sm font-medium text-gray-500 mb-3">Landing Page Generator</h4>
+      <div className="mt-5 border-t pt-5">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Landing Page Generator</h4>
         <Textarea 
           placeholder="Describe the landing page you want to generate with this brand style..."
-          className={`${fontFamily} mb-4 bg-white/50 transition-all duration-700`}
-          rows={4}
+          className={`${fontFamily} mb-3 bg-white/50 transition-all duration-700`}
+          rows={3}
         />
         <div className="flex justify-center">
           <Button 
