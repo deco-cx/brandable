@@ -1,21 +1,21 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import ChatSimulation from './ChatSimulation';
-
 interface Props {
   onThemeChange: (theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist') => void;
 }
-
-const HeroSection: React.FC<Props> = ({ onThemeChange }) => {
-  return (
-    <section className="relative pt-32 pb-32 overflow-hidden">
+const HeroSection: React.FC<Props> = ({
+  onThemeChange
+}) => {
+  return <section className="relative pt-32 pb-6 overflow-hidden">
       {/* Improved bottom gradient fade */}
       <div className="absolute inset-0 bg-gradient-to-b from-brand-50 via-brand-50 to-white -z-10"></div>
       
       {/* Animated background elements */}
       <div className="absolute top-20 right-20 h-64 w-64 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse-slow"></div>
-      <div className="absolute bottom-10 left-10 h-64 w-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-slow" style={{ animationDelay: "2s" }}></div>
+      <div style={{
+      animationDelay: "2s"
+    }} className="absolute top-20 left-10 h-64 w-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-slow"></div>
       
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -43,8 +43,6 @@ const HeroSection: React.FC<Props> = ({ onThemeChange }) => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;

@@ -1,29 +1,17 @@
 import React from 'react';
 import StyleguidePreview from './StyleguidePreview';
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from "@/components/ui/carousel";
-
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 interface Props {
   theme: 'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist';
 }
-
-const StyleguideSection: React.FC<Props> = ({ theme }) => {
-  const allThemes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = [
-    'default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'
-  ];
-  
-  return (
-    <section id="styleguide" className="py-12 relative">
+const StyleguideSection: React.FC<Props> = ({
+  theme
+}) => {
+  const allThemes: Array<'default' | 'eco' | 'tech' | 'luxury' | 'playful' | 'minimalist'> = ['default', 'eco', 'tech', 'luxury', 'playful', 'minimalist'];
+  return <section id="styleguide" className="py-12 pt-0 relative mx-0 my-0">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-8">
-          <h2 className="text-2xl font-bold mb-2">
-            Your Brand, Amplified for Everyone
-          </h2>
+          
         </div>
         
         <div className="max-w-4xl mx-auto">
@@ -34,25 +22,17 @@ const StyleguideSection: React.FC<Props> = ({ theme }) => {
           <h3 className="text-center text-lg font-medium mb-4">Explore Different Brand Styles</h3>
           <Carousel className="mx-auto">
             <CarouselContent>
-              {allThemes.map((themeStyle) => (
-                <CarouselItem key={themeStyle} className="basis-1/3 md:basis-1/4">
+              {allThemes.map(themeStyle => <CarouselItem key={themeStyle} className="basis-1/3 md:basis-1/4">
                   <div className="p-1">
                     <div className={`h-24 w-full rounded-md flex items-center justify-center p-2 
-                      ${themeStyle === 'default' ? 'bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300' : 
-                      themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' :
-                      themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' :
-                      themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' :
-                      themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' :
-                      'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}
-                    >
+                      ${themeStyle === 'default' ? 'bg-gradient-to-r from-brand-200 via-brand-100 to-brand-300' : themeStyle === 'eco' ? 'bg-gradient-to-r from-green-200 via-green-100 to-purple-200' : themeStyle === 'tech' ? 'bg-gradient-to-r from-slate-200 via-cyan-100 to-blue-100' : themeStyle === 'luxury' ? 'bg-gradient-to-r from-stone-200 via-amber-100 to-stone-100' : themeStyle === 'playful' ? 'bg-gradient-to-r from-pink-100 via-yellow-100 to-blue-100' : 'bg-gradient-to-r from-neutral-100 via-white to-neutral-100'}`}>
                       <div className="text-center">
                         <div className="capitalize font-medium">{themeStyle}</div>
                         <div className="text-xs opacity-70">Brand Style</div>
                       </div>
                     </div>
                   </div>
-                </CarouselItem>
-              ))}
+                </CarouselItem>)}
             </CarouselContent>
             <CarouselPrevious className="-left-5 bg-white" />
             <CarouselNext className="-right-5 bg-white" />
@@ -91,8 +71,6 @@ const StyleguideSection: React.FC<Props> = ({ theme }) => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default StyleguideSection;

@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
-
 const CtaSection: React.FC = () => {
-  return (
-    <section id="get-started" className="py-20 relative overflow-hidden">
+  return <section id="get-started" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-brand-900 to-blue-900 -z-10"></div>
       
       {/* Animated background elements */}
@@ -22,12 +19,10 @@ const CtaSection: React.FC = () => {
             Join hundreds of brands who are creating consistent, on-brand experiences with Brandable.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100 rounded-full px-8">
+            <Button size="lg" className="rounded-full px-8 bg-gray-900 hover:bg-gray-800 text-slate-100 font-bold">
               Start Building
             </Button>
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full px-8">
-              Learn More
-            </Button>
+            
           </div>
           
           <div className="mt-12 grid grid-cols-3 gap-8 max-w-md mx-auto">
@@ -46,8 +41,6 @@ const CtaSection: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CtaSection;
