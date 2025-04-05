@@ -35,29 +35,29 @@ const ChatSimulation: React.FC<Props> = ({ onThemeChange, currentTheme }) => {
   
   // Define brand-specific responses (second message from user)
   const brandResponses: Message[] = [
-    { id: 2, text: "Amazonian Rainforest Eco Beauty. We make sustainable beauty products from rainforest ingredients.", sender: 'user', delay: 2000 },
-    { id: 2, text: "Quantum Tech Solutions. We're a B2B SaaS company focusing on AI and cloud solutions.", sender: 'user', delay: 2000 },
-    { id: 2, text: "Elegance Luxury Watches. We sell premium timepieces for affluent professionals.", sender: 'user', delay: 2000 },
-    { id: 2, text: "FunTime Kids Academy. We provide educational activities for children that are playful and engaging.", sender: 'user', delay: 2000 },
-    { id: 2, text: "Mono Design Studio. We specialize in minimalist graphic design and brand identity.", sender: 'user', delay: 2000 }
+    { id: 101, text: "Amazonian Rainforest Eco Beauty. We make sustainable beauty products from rainforest ingredients.", sender: 'user', delay: 2000 },
+    { id: 102, text: "Quantum Tech Solutions. We're a B2B SaaS company focusing on AI and cloud solutions.", sender: 'user', delay: 2000 },
+    { id: 103, text: "Elegance Luxury Watches. We sell premium timepieces for affluent professionals.", sender: 'user', delay: 2000 },
+    { id: 104, text: "FunTime Kids Academy. We provide educational activities for children that are playful and engaging.", sender: 'user', delay: 2000 },
+    { id: 105, text: "Mono Design Studio. We specialize in minimalist graphic design and brand identity.", sender: 'user', delay: 2000 }
   ];
   
   // Brand-specific suggestions with themes applied (third message)
   const themedSuggestions: Message[] = [
-    { id: 3, text: "I'm seeing forest greens and purples for your eco-friendly brand. How about this theme?", sender: 'bot', delay: 2000, theme: 'eco' },
-    { id: 3, text: "For a tech company like yours, I suggest a modern look with blues and cyans. What do you think?", sender: 'bot', delay: 2000, theme: 'tech' },
-    { id: 3, text: "Your luxury watch brand would look elegant with rich browns and gold accents like this.", sender: 'bot', delay: 2000, theme: 'luxury' },
-    { id: 3, text: "For a children's brand, bright colors and rounded shapes would be perfect! See this theme.", sender: 'bot', delay: 2000, theme: 'playful' },
-    { id: 3, text: "For your minimalist design studio, I'd recommend a clean black and white theme with subtle grays.", sender: 'bot', delay: 2000, theme: 'minimalist' }
+    { id: 201, text: "I'm seeing forest greens and purples for your eco-friendly brand. How about this theme?", sender: 'bot', delay: 2000, theme: 'eco' },
+    { id: 202, text: "For a tech company like yours, I suggest a modern look with blues and cyans. What do you think?", sender: 'bot', delay: 2000, theme: 'tech' },
+    { id: 203, text: "Your luxury watch brand would look elegant with rich browns and gold accents like this.", sender: 'bot', delay: 2000, theme: 'luxury' },
+    { id: 204, text: "For a children's brand, bright colors and rounded shapes would be perfect! See this theme.", sender: 'bot', delay: 2000, theme: 'playful' },
+    { id: 205, text: "For your minimalist design studio, I'd recommend a clean black and white theme with subtle grays.", sender: 'bot', delay: 2000, theme: 'minimalist' }
   ];
   
   // User thank you messages (fourth message)
   const thankYouMessages: Message[] = [
-    { id: 4, text: "That's perfect! The green tones really capture our eco-friendly values. Thank you!", sender: 'user', delay: 2000 },
-    { id: 4, text: "Wow, that's exactly what we were looking for! The tech vibe is spot on. Thanks!", sender: 'user', delay: 2000 },
-    { id: 4, text: "Absolutely beautiful! The elegant color scheme perfectly represents our luxury brand. Thank you!", sender: 'user', delay: 2000 },
-    { id: 4, text: "The kids will love this! Those playful colors are exactly what we wanted. Thanks so much!", sender: 'user', delay: 2000 },
-    { id: 4, text: "That minimalist approach is exactly what we were after. Clean and professional. Thank you!", sender: 'user', delay: 2000 }
+    { id: 301, text: "That's perfect! The green tones really capture our eco-friendly values. Thank you!", sender: 'user', delay: 2000 },
+    { id: 302, text: "Wow, that's exactly what we were looking for! The tech vibe is spot on. Thanks!", sender: 'user', delay: 2000 },
+    { id: 303, text: "Absolutely beautiful! The elegant color scheme perfectly represents our luxury brand. Thank you!", sender: 'user', delay: 2000 },
+    { id: 304, text: "The kids will love this! Those playful colors are exactly what we wanted. Thanks so much!", sender: 'user', delay: 2000 },
+    { id: 305, text: "That minimalist approach is exactly what we were after. Clean and professional. Thank you!", sender: 'user', delay: 2000 }
   ];
 
   // Map theme names to conversation indexes
